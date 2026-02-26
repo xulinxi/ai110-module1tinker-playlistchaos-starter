@@ -276,7 +276,10 @@ def render_playlist(label, songs):
         st.write("No songs in this playlist.")
         return
 
-    query = st.text_input(f"Search {label} playlist by artist", key=f"search_{label}")
+    query = st.text_input(
+        f"Search {label} playlist by artist (partial, case-insensitive)",
+        key=f"search_{label}",
+    )
     filtered = search_songs(songs, query, field="artist")
 
     if not filtered:
@@ -332,7 +335,8 @@ def stats_section(playlists):
 
     col4, col5, col6 = st.columns(3)
     col4.metric("Mixed songs", stats["mixed_count"])
-    col5.metric("Hype ratio", f"{stats['hype_ratio']:.2f}")
+    # show hype ratio as a percentage with % sign
+    col5.metric("Hype ratio", f"{stats['hype_ratio']:.2f}%")
     col6.metric("Average energy", f"{stats['avg_energy']:.2f}")
 
     top_artist = stats["top_artist"]
